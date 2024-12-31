@@ -1,7 +1,6 @@
 import { config, ConnectionPool, Request } from 'mssql';
 
 export interface SQLParam {
-
   name: string;
   type: any;
   value: any;
@@ -13,7 +12,8 @@ export class Database {
   /**
    * Initialize the database connection pool
    */
-  public static async init(): Promise<void> {
+
+  public static async init(retryCount: number = 0): Promise<void> {
     try {
       const env = process.env;
       const sqlConfig: config = {
@@ -34,7 +34,11 @@ export class Database {
       console.log('Connection Successful!');
     } catch (err) {
       console.error('Error connecting to the database:', err);
-      throw err;
+      if (retryCount < 100) {
+        console.log('Retrying in 60 seconds.', 'retry number:', retryCount + 1);
+        await new Promise((res) => setTimeout(res, 60000));
+        this.init(retryCount + 1);
+      }
     }
   }
 
