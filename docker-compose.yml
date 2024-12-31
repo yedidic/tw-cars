@@ -21,11 +21,13 @@ services:
     depends_on:
       - db
     environment:
+      MY_SECRET_KEY: my-secret-key
+      PORT: ${SERVER_PORT}
       DB_HOST: db
       DB_PORT: ${DB_PORT}
       DB_USER: sa
       DB_PASS: ${SA_PASSWORD}
-      PORT: ${SERVER_PORT}
+      TRUST_SERVER_CERT: 1
 
   client:
     build:
@@ -35,6 +37,8 @@ services:
       - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     depends_on:
       - server
+    environment:
+      VITE_SERVER_API_URL: http://localhost:3000
 
 volumes:
   mssql_data:

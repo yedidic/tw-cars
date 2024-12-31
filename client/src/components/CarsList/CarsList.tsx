@@ -15,7 +15,7 @@ const CarsList = () => {
 
   const [rowData, setRowData] = useState<Car[]>([]);
 
-  const [colDefs, setColDefs] = useState<ColDef<Car>[]>([
+  const [colDefs] = useState<ColDef<Car>[]>([
     { field: 'id' },
     { field: 'make', editable: true },
     { field: 'model', editable: true },
@@ -32,7 +32,6 @@ const CarsList = () => {
       try {
         if (data) {
           await carService.upsertCar(data);
-          console.log('Data updated:', data);
         }
       } catch (error) {
         console.error('Error updating data:', error);

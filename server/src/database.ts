@@ -18,9 +18,9 @@ export class Database {
       const env = process.env;
       const sqlConfig: config = {
         user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
+        password: process.env.DB_PASS,
         database: process.env.DB_NAME,
-        server: process.env.DB_HOST || 'localhost',
+        server: process.env.DB_HOST || 'db',
         pool: {
           max: 10,
           min: 0,
