@@ -25,7 +25,7 @@ Ensure the following are installed on your machine:
 
 ### Environment Variables
 
-Create a `.env` file in the root directory of the project to define environment-specific variables. Example:
+Create a `.env` file in the root directory of the project to define environment-specific variables. Paste this in the `.env` file:
 
 ```env
 DB_PORT=1433
