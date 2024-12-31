@@ -39,6 +39,17 @@ CREATE PROCEDURE upsertCar
     @Price DECIMAL(10, 2) = NULL        
 AS
 BEGIN
+    SET NOCOUNT ON;
+
+    -- Declare a table variable to capture the output
+    DECLARE @OutputTable TABLE (
+        ID INT,
+        Make NVARCHAR(50),
+        Model NVARCHAR(50),
+        Year INT,
+        Price DECIMAL(10, 2)
+    );
+
     -- Check if the car exists
     IF EXISTS (SELECT 1 FROM Cars WHERE ID = @ID)
     BEGIN
@@ -49,12 +60,18 @@ BEGIN
             Model = COALESCE(@Model, Model),
             Year = COALESCE(@Year, Year),
             Price = COALESCE(@Price, Price)
+        OUTPUT 
+            INSERTED.ID, INSERTED.Make, INSERTED.Model, INSERTED.Year, INSERTED.Price
+        INTO @OutputTable
         WHERE ID = @ID;
     END
     ELSE
     BEGIN
         -- Insert new car, setting default values for missing fields
         INSERT INTO Cars (Make, Model, Year, Price)
+        OUTPUT 
+            INSERTED.ID, INSERTED.Make, INSERTED.Model, INSERTED.Year, INSERTED.Price
+        INTO @OutputTable
         VALUES (
             COALESCE(@Make, ''),   
             COALESCE(@Model, ''), 
@@ -62,5 +79,8 @@ BEGIN
             COALESCE(@Price, NULL)            
         );
     END
+
+    -- Return the result
+    SELECT * FROM @OutputTable;
 END;
 GO

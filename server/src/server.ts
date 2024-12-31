@@ -16,13 +16,16 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-app.use('/ping', (req, res) => {
-  res.send('Hello World!');
+app.post('/token', (req, res) => {
+  const token = jwt.sign({ user: 'testUser' }, SECRET_KEY, {
+    expiresIn: '7d',
+  });
+  res.send(token);
 });
 
 //Protected Routes
-app.use('/api/ping', authenticateJWT, (req, res) => {
-  res.send('Protected Hello World!');
+app.get('/api/ping', authenticateJWT, (req, res) => {
+  res.send('Hello Protected World!');
 });
 app.use('/api/cars', authenticateJWT, carRoutes);
 
@@ -33,7 +36,3 @@ app.listen(PORT, () => {
 });
 
 // Example code for generating a token:
-const token = jwt.sign({ user: 'testUser' }, SECRET_KEY, {
-  expiresIn: '1h',
-});
-console.log(`Generated Token: ${token}`);
