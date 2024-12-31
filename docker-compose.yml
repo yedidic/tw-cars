@@ -25,6 +25,7 @@ services:
       PORT: ${SERVER_PORT}
       DB_HOST: db
       DB_PORT: ${DB_PORT}
+      DB_NAME: car-db
       DB_USER: sa
       DB_PASS: ${SA_PASSWORD}
       TRUST_SERVER_CERT: 1
