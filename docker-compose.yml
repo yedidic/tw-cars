@@ -1,0 +1,40 @@
+services:
+  db:
+    build:
+      context: ./db
+    container_name: sql-server
+    ports:
+      - "${DB_PORT}:${DB_PORT}" # Uses the port from .env
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: ${SA_PASSWORD}
+      MSSQL_PID: Express
+      
+  server:
+    build:
+      context: ./server
+      args:
+        PORT: ${SERVER_PORT} 
+    container_name: node_server
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: ${DB_PORT}
+      DB_USER: sa
+      DB_PASS: ${SA_PASSWORD}
+      PORT: ${SERVER_PORT}
+
+  client:
+    build:
+      context: ./client
+    container_name: react_frontend
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    depends_on:
+      - server
+
+volumes:
+  mssql_data:

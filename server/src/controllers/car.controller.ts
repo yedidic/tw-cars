@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { CarService } from "../services/car.service;
+import { Request, Response } from 'express';
+import { CarService } from '../services/car.service';
 
 export class CarController {
   static async getCars(req: Request, res: Response) {

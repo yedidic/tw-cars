@@ -1,14 +1,14 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
-const MY_SECRET_KEY = process
+const SECRET_KEY = process.env.SECRET_KEY || 'SECRET_KEY';
 
 export const authenticateJWT = (req: any, res: any, next: any) => {
   const authHeader = req.headers.authorization;
 
   if (authHeader) {
-    const token = authHeader.split(" ")[1];
+    const token = authHeader.split(' ')[1];
 
-    jwt.verify(token, MY_SECRET_KEY, (err: any, user: any) => {
+    jwt.verify(token, SECRET_KEY, (err: any, user: any) => {
       if (err) {
         return res.sendStatus(403);
       }
