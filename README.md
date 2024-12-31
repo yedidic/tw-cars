@@ -73,8 +73,15 @@ docker-compose down
 
    **The only username allowed to retrieve a token at the moment is `cars`.**
 
+   ![image](https://github.com/user-attachments/assets/03abe625-cad4-428d-9f70-a7aa87b60be0)
+
+
 
 ### Access the Table and Update Cells
    Now you're supposed to get the access to the table. you can easily click the cells and update their data, it'll be automatically reflected at the database.
+
+   
+   ![image](https://github.com/user-attachments/assets/bbee7e53-4b74-4fad-aff2-bee2633ab899)
+
 
 Good Luck and Thank You!
