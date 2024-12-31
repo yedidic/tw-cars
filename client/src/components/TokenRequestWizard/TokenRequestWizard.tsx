@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useToken } from '../../tokens/useToken';
 
 // Styled component for the container
-const FullHeightContainer = styled.div`
+const FullHeightContainer = styled.form`
   display: flex;
   align-items: center;
   gap: 20px;
@@ -28,9 +28,14 @@ const TokenRequestWizard = () => {
   const { requestToken } = useToken();
 
   return (
-    <FullHeightContainer>
+    <FullHeightContainer
+      onSubmit={(e) => {
+        e.preventDefault();
+        requestToken(user);
+      }}
+    >
       <Label>
-        Enter user name:
+        <b>Enter user name:</b>
         <Input
           type="text"
           placeholder={`i.e "cars"`}
@@ -38,12 +43,7 @@ const TokenRequestWizard = () => {
           onChange={(e) => setUser(e.target.value)}
         />
       </Label>
-      <Button
-        onClick={() => {
-          requestToken(user);
-        }}
-        disabled={!user}
-      >
+      <Button type="submit" disabled={!user}>
         Submit
       </Button>
     </FullHeightContainer>
